@@ -1,5 +1,5 @@
 ## cornerDetect and Multi-checkerboard automatic detection 
-- implication the papar "Automatic Camera and Range Sensor Calibration using a single Shot"
+- realize the paper "Automatic Camera and Range Sensor Calibration using a single Shot"
 
 <p align="center">
 <img src="result02.png" width="500"> 
@@ -18,6 +18,6 @@ The code was developed on a Windows machine with Visual Studio 2013.
 - The main purpose is find the bugs of the code.
 
 ## References
-[1]"Automatic Camera and Range Sensor Calibration using a single Shot" 2012
+###[1]"Automatic Camera and Range Sensor Calibration using a single Shot" 2012
 
-[2] https://github.com/qibao77/cornerDetect
+###[2] https://github.com/qibao77/cornerDetect
