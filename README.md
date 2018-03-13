@@ -24,4 +24,4 @@ The code was developed on a Windows machine with Visual Studio 2013.
 
 
 ## 可视范围和光照条件不确定或者棋盘格个数不确定的情况下,需要相机标定可以联系 997737609@qq.com.
-## The camera calibration problem can contact me if the visual range and lighting conditions are uncertain or the number of checkerboard ## lattice is uncertain.
+## The camera calibration problem can contact me if the visual range and lighting conditions are uncertain or the number of checkerboard lattice is uncertain.
