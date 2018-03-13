@@ -18,6 +18,10 @@ The code was developed on a Windows machine with Visual Studio 2013.
 - The main purpose is find the bugs of the code.
 
 ## References
-###[1]"Automatic Camera and Range Sensor Calibration using a single Shot" 2012
+## [1]"Automatic Camera and Range Sensor Calibration using a single Shot" 2012
 
-###[2] https://github.com/qibao77/cornerDetect
+## [2] https://github.com/qibao77/cornerDetect
+
+
+[##] 可视范围和光照条件不确定或者棋盘格个数不确定的情况下,需要相机标定可以联系 997737609@qq.com.
+## The camera calibration problem can contact me if the visual range and lighting conditions are uncertain or the number of checkerboard ## lattice is uncertain.
