@@ -1,6 +1,6 @@
 /*  Copyright 2017 only(997737609@qq.com). All Rights Reserved.           */
 /*                                                                        */
-/*  This file is part of ACRC(×Ô¶¯¶àÆåÅÌ¸ñÌáÈ¡).                          */
+/*  This file is part of ACRC(è‡ªåŠ¨å¤šæ£‹ç›˜æ ¼æå–).                          */
 /*                                                                        */
 /*  part of source code come from https://github.com/qibao77/cornerDetect */
 /*  Automatic Camera and Range Sensor Calibration using a single Shot     */
@@ -48,10 +48,10 @@ dtype CornerDetAC::normpdf(dtype dist, dtype mu, dtype sigma)
 }
 
 
-//**************************Éú³ÉºË*****************************//
-//angle´ú±íºËÀàĞÍ£º45¶ÈºËºÍ90¶ÈºË
-//kernelSize´ú±íºË´óĞ¡£¨×îÖÕÉú³ÉµÄºËµÄ´óĞ¡ÎªkernelSize*2+1£©
-//kernelA...kernelDÊÇÉú³ÉµÄºË
+//**************************ç”Ÿæˆæ ¸*****************************//
+//angleä»£è¡¨æ ¸ç±»å‹ï¼š45åº¦æ ¸å’Œ90åº¦æ ¸
+//kernelSizeä»£è¡¨æ ¸å¤§å°ï¼ˆæœ€ç»ˆç”Ÿæˆçš„æ ¸çš„å¤§å°ä¸ºkernelSize*2+1ï¼‰
+//kernelA...kernelDæ˜¯ç”Ÿæˆçš„æ ¸
 //*************************************************************************//
 void CornerDetAC::createkernel(float angle1, float angle2, int kernelSize, Mat &kernelA, Mat &kernelB, Mat &kernelC, Mat &kernelD)
 {
@@ -65,9 +65,9 @@ void CornerDetAC::createkernel(float angle1, float angle2, int kernelSize, Mat &
 
 	for (int u = 0; u < width; ++u){
 		for (int v = 0; v < height; ++v){
-			dtype vec[] = { u - kernelSize, v - kernelSize };//Ïàµ±ÓÚ½«×ø±êÔ­µãÒÆ¶¯µ½ºËÖĞĞÄ
-			dtype dis = std::sqrt(vec[0] * vec[0] + vec[1] * vec[1]);//Ïàµ±ÓÚ¼ÆËãµ½ÖĞĞÄµÄ¾àÀë
-			dtype side1 = vec[0] * (-sin(angle1)) + vec[1] * cos(angle1);//Ïàµ±ÓÚ½«×ø±êÔ­µãÒÆ¶¯ºóµÄºË½øĞĞĞı×ª£¬ÒÔ´Ë²úÉúËÄÖÖºË
+			dtype vec[] = { u - kernelSize, v - kernelSize };//ç›¸å½“äºå°†åæ ‡åŸç‚¹ç§»åŠ¨åˆ°æ ¸ä¸­å¿ƒ
+			dtype dis = std::sqrt(vec[0] * vec[0] + vec[1] * vec[1]);//ç›¸å½“äºè®¡ç®—åˆ°ä¸­å¿ƒçš„è·ç¦»
+			dtype side1 = vec[0] * (-sin(angle1)) + vec[1] * cos(angle1);//ç›¸å½“äºå°†åæ ‡åŸç‚¹ç§»åŠ¨åçš„æ ¸è¿›è¡Œæ—‹è½¬ï¼Œä»¥æ­¤äº§ç”Ÿå››ç§æ ¸
 			dtype side2 = vec[0] * (-sin(angle2)) + vec[1] * cos(angle2);//X=X0*cos+Y0*sin;Y=Y0*cos-X0*sin
 			if (side1 <= -0.1&&side2 <= -0.1){
 				kernelA.ptr<dtype>(v)[u] = normpdf(dis, 0, kernelSize / 2);
@@ -85,7 +85,7 @@ void CornerDetAC::createkernel(float angle1, float angle2, int kernelSize, Mat &
 	}
 	//std::cout << "kernelA:" << kernelA << endl << "kernelB:" << kernelB << endl
 	//	<< "kernelC:" << kernelC<< endl << "kernelD:" << kernelD << endl;
-	//¹éÒ»»¯
+	//å½’ä¸€åŒ–
 	kernelA = kernelA / cv::sum(kernelA)[0];
 	kernelB = kernelB / cv::sum(kernelB)[0];
 	kernelC = kernelC / cv::sum(kernelC)[0];
@@ -93,7 +93,7 @@ void CornerDetAC::createkernel(float angle1, float angle2, int kernelSize, Mat &
 
 }
 
-//**************************//»ñÈ¡×îĞ¡Öµ*****************************//
+//**************************//è·å–æœ€å°å€¼*****************************//
 //*************************************************************************//
 void CornerDetAC::getMin(Mat src1, Mat src2, Mat &dst){
 	int rowsLeft = src1.rows;
@@ -120,7 +120,7 @@ void CornerDetAC::getMin(Mat src1, Mat src2, Mat &dst){
 		}
 	}
 }
-//**************************//»ñÈ¡×î´óÖµ*****************************//
+//**************************//è·å–æœ€å¤§å€¼*****************************//
 //*************************************************************************//
 void CornerDetAC::getMax(Mat src1, Mat src2, Mat &dst)
 {
@@ -148,13 +148,13 @@ void CornerDetAC::getMax(Mat src1, Mat src2, Mat &dst)
 		}
 	}
 }
-//»ñÈ¡Ìİ¶È½Ç¶ÈºÍÈ¨ÖØ
+//è·å–æ¢¯åº¦è§’åº¦å’Œæƒé‡
 void CornerDetAC::getImageAngleAndWeight(Mat img, Mat &imgDu, Mat &imgDv, Mat &imgAngle, Mat &imgWeight)
 {
 	
 	Mat sobelKernel(3, 3, mtype);
 	Mat sobelKernelTrs(3, 3, mtype);
-	//sobleÂË²¨Æ÷Ëã×ÓºË
+	//sobleæ»¤æ³¢å™¨ç®—å­æ ¸
 	sobelKernel.col(0).setTo(cv::Scalar(-1.0));
 	sobelKernel.col(1).setTo(cv::Scalar(0.0));
 	sobelKernel.col(2).setTo(cv::Scalar(1.0));
@@ -198,10 +198,10 @@ void CornerDetAC::getImageAngleAndWeight(Mat img, Mat &imgDu, Mat &imgDv, Mat &i
 	}
 	*/
 }
-//**************************·Ç¼«´óÖµÒÖÖÆ*****************************//
-//inputCornersÊÇÊäÈë½Çµã£¬outputCornersÊÇ·Ç¼«´óÖµÒÖÖÆºóµÄ½Çµã
-//thresholdÊÇÉè¶¨µÄãĞÖµ
-//marginÊÇ½øĞĞ·Ç¼«´óÖµÒÖÖÆÊ±¼ì²é·½¿éÓëÊäÈë¾ØÕó±ß½çµÄ¾àÀë£¬patchSizeÊÇ¸Ã·½¿éµÄ´óĞ¡
+//**************************éæå¤§å€¼æŠ‘åˆ¶*****************************//
+//inputCornersæ˜¯è¾“å…¥è§’ç‚¹ï¼ŒoutputCornersæ˜¯éæå¤§å€¼æŠ‘åˆ¶åçš„è§’ç‚¹
+//thresholdæ˜¯è®¾å®šçš„é˜ˆå€¼
+//marginæ˜¯è¿›è¡Œéæå¤§å€¼æŠ‘åˆ¶æ—¶æ£€æŸ¥æ–¹å—ä¸è¾“å…¥çŸ©é˜µè¾¹ç•Œçš„è·ç¦»ï¼ŒpatchSizeæ˜¯è¯¥æ–¹å—çš„å¤§å°
 //*************************************************************************//
 void CornerDetAC::nonMaximumSuppression(Mat& inputCorners, vector<Point2f>& outputCorners, int patchSize, dtype threshold, int margin)
 {
@@ -209,13 +209,13 @@ void CornerDetAC::nonMaximumSuppression(Mat& inputCorners, vector<Point2f>& outp
 	{
 		cout << "The imput mat is empty!" << endl; return;
 	}
-	for (int i = margin + patchSize; i <= inputCorners.cols - (margin + patchSize+1); i = i + patchSize + 1)//ÒÆ¶¯¼ì²é·½¿é£¬Ã¿´ÎÒÆ¶¯Ò»¸ö·½¿éµÄ´óĞ¡
+	for (int i = margin + patchSize; i <= inputCorners.cols - (margin + patchSize+1); i = i + patchSize + 1)//ç§»åŠ¨æ£€æŸ¥æ–¹å—ï¼Œæ¯æ¬¡ç§»åŠ¨ä¸€ä¸ªæ–¹å—çš„å¤§å°
 	{
 		for (int j = margin + patchSize; j <= inputCorners.rows - (margin + patchSize+1); j = j + patchSize + 1)
 		{
 			dtype maxVal = inputCorners.ptr<dtype>(j)[i];
 			int maxX = i; int maxY = j;
-			for (int m = i; m <= i + patchSize ; m++)//ÕÒ³ö¸Ã¼ì²é·½¿éÖĞµÄ¾Ö²¿×î´óÖµ
+			for (int m = i; m <= i + patchSize ; m++)//æ‰¾å‡ºè¯¥æ£€æŸ¥æ–¹å—ä¸­çš„å±€éƒ¨æœ€å¤§å€¼
 			{
 				for (int n = j; n <= j + patchSize ; n++)
 				{
@@ -226,9 +226,9 @@ void CornerDetAC::nonMaximumSuppression(Mat& inputCorners, vector<Point2f>& outp
 					}
 				}
 			}
-			if (maxVal < threshold)continue;//Èô¸Ã¾Ö²¿×î´óÖµĞ¡ÓÚãĞÖµÔò²»Âú×ãÒªÇó
+			if (maxVal < threshold)continue;//è‹¥è¯¥å±€éƒ¨æœ€å¤§å€¼å°äºé˜ˆå€¼åˆ™ä¸æ»¡è¶³è¦æ±‚
 			int flag = 0;
-			for (int m = maxX - patchSize; m <= min(maxX + patchSize, inputCorners.cols - margin-1); m++)//¶ş´Î¼ì²é
+			for (int m = maxX - patchSize; m <= min(maxX + patchSize, inputCorners.cols - margin-1); m++)//äºŒæ¬¡æ£€æŸ¥
 			{
 				for (int n = maxY - patchSize; n <= min(maxY + patchSize, inputCorners.rows - margin-1); n++)
 				{
@@ -381,7 +381,7 @@ float CornerDetAC::norm2d(cv::Point2f o)
 {
 	return sqrt(o.x*o.x + o.y*o.y);
 }
-//ÑÇÏñËØ¾«¶ÈÕÒ½Çµã
+//äºšåƒç´ ç²¾åº¦æ‰¾è§’ç‚¹
 void CornerDetAC::refineCorners(vector<Point2f> &cornors, Mat imgDu, Mat imgDv, Mat imgAngle, Mat imgWeight, float radius){
 	// image dimensions
 	int width = imgDu.cols;
@@ -605,7 +605,7 @@ void CornerDetAC::cornerCorrelationScore(Mat img, Mat imgWeight, vector<Point2f>
 
 	//create intensity filter kernel
 	Mat kernelA, kernelB, kernelC, kernelD;
-	createkernel(atan2(cornersEdge[0].y, cornersEdge[0].x), atan2(cornersEdge[1].y, cornersEdge[1].x), c[0], kernelA, kernelB, kernelC, kernelD);//1.1 ²úÉúËÄÖÖºË
+	createkernel(atan2(cornersEdge[0].y, cornersEdge[0].x), atan2(cornersEdge[1].y, cornersEdge[1].x), c[0], kernelA, kernelB, kernelC, kernelD);//1.1 äº§ç”Ÿå››ç§æ ¸
 
 	//checkerboard responses
 	float a1, a2, b1, b2;
@@ -713,7 +713,7 @@ void CornerDetAC::detectCorners(Mat &Src, vector<Point> &resultCornors, Corners&
 	for (int i = 0; i < 6; i++)
 	{
 		Mat kernelA1, kernelB1, kernelC1, kernelD1;
-		createkernel(templateProps[i].x, templateProps[i].y, radius[i / 2], kernelA1, kernelB1, kernelC1, kernelD1);//1.1 ²úÉúËÄÖÖºË
+		createkernel(templateProps[i].x, templateProps[i].y, radius[i / 2], kernelA1, kernelB1, kernelC1, kernelD1);//1.1 äº§ç”Ÿå››ç§æ ¸
 
 		//std::cout << "kernelA:" << kernelA1 << endl << "kernelB:" << kernelB1 << endl
 		//	<< "kernelC:" << kernelC1 << endl << "kernelD:" << kernelD1 << endl;
@@ -730,13 +730,16 @@ void CornerDetAC::detectCorners(Mat &Src, vector<Point> &resultCornors, Corners&
 		filter2D(imageNorm, imgCornerD1, mtype, kernelD1);//b2
 #endif	
 		//compute mean
-		imgCornerMean = (imgCornerA1 + imgCornerB1 + imgCornerC1 + imgCornerD1) / 4.0;//1.3 °´ÕÕ¹«Ê½½øĞĞ¼ÆËã
+		imgCornerMean = (imgCornerA1 + imgCornerB1 + imgCornerC1 + imgCornerD1) / 4.0;//1.3 æŒ‰ç…§å…¬å¼è¿›è¡Œè®¡ç®—
 		// case 1: a = white, b = black
 		getMin(imgCornerA1 - imgCornerMean, imgCornerB1 - imgCornerMean, imgCornerA);
-		getMin(imgCornerMean - imgCornerC1, imgCornerMean - imgCornerD1, imgCornerB);
+		getMax(imgCornerMean - imgCornerC1, imgCornerMean - imgCornerD1, imgCornerB);
+		//getMin(imgCornerMean - imgCornerC1, imgCornerMean - imgCornerD1, imgCornerB);
+		//è¿™é‡Œå†™é”™äº†å§ï¼Œè®ºæ–‡å…¬å¼æ˜¯ mu - min(fc,fd)ï¼Œæ‰€ä»¥åº”è¯¥è°ƒç”¨getMax()
 		getMin(imgCornerA, imgCornerB, imgCorner1);
 		// case 2: b = white, a = black
-		getMin(imgCornerMean - imgCornerA1, imgCornerMean - imgCornerB1, imgCornerA);
+		//getMin(imgCornerMean - imgCornerA1, imgCornerMean - imgCornerB1, imgCornerA);
+		getMax(imgCornerMean - imgCornerA1, imgCornerMean - imgCornerB1, imgCornerA);
 		getMin(imgCornerC1 - imgCornerMean, imgCornerD1 - imgCornerMean, imgCornerB);
 		getMin(imgCornerA, imgCornerB, imgCorner2);
 
@@ -745,7 +748,7 @@ void CornerDetAC::detectCorners(Mat &Src, vector<Point> &resultCornors, Corners&
 		getMax(imgCorners, imgCorner2, imgCorners);
 	}
 #ifdef show_
-	namedWindow("ROI");//´´½¨´°¿Ú£¬ÏÔÊ¾Ô­Ê¼Í¼Ïñ
+	namedWindow("ROI");//åˆ›å»ºçª—å£ï¼Œæ˜¾ç¤ºåŸå§‹å›¾åƒ
 	imshow("ROI", imgCorners); waitKey(10);
 #endif
 
@@ -753,7 +756,7 @@ void CornerDetAC::detectCorners(Mat &Src, vector<Point> &resultCornors, Corners&
 	std::cout << "filtering time cost :" << t << std::endl;
 
 	// extract corner candidates via non maximum suppression
-	nonMaximumSuppression(imgCorners, cornerPoints, 3, 0.025, 5);//1.5 ·Ç¼«´óÖµÒÖÖÆËã·¨½øĞĞ¹ıÂË£¬»ñÈ¡ÆåÅÌ¸ñ½Çµã³õ²½½á¹û
+	nonMaximumSuppression(imgCorners, cornerPoints, 3, 0.025, 5);//1.5 éæå¤§å€¼æŠ‘åˆ¶ç®—æ³•è¿›è¡Œè¿‡æ»¤ï¼Œè·å–æ£‹ç›˜æ ¼è§’ç‚¹åˆæ­¥ç»“æœ
 
 	//post processing
 
@@ -787,7 +790,7 @@ void CornerDetAC::detectCorners(Mat &Src, vector<Point> &resultCornors, Corners&
 	scoreCorners(imageNorm, img_angle, img_weight, cornerPoints, radius, score);
 
 #ifdef show_
-	namedWindow("src");//´´½¨´°¿Ú£¬ÏÔÊ¾Ô­Ê¼Í¼Ïñ
+	namedWindow("src");//åˆ›å»ºçª—å£ï¼Œæ˜¾ç¤ºåŸå§‹å›¾åƒ
 	imshow("src", Src); 
 	waitKey(0);
 #endif
